@@ -4,6 +4,11 @@ import { StyleSheet, Text, View } from 'react-native';
 import  TemperatureMonitoring  from './TemperatureMonitoringComponent'
 import { render } from 'react-dom';
 import * as Font from "expo-font";
+import {Provider}  from 'react-redux';
+import {createStore} from 'redux';
+import rootReducer from './reducer/rootReducers.js';  
+
+const store = createStore(rootReducer);
 
 export default class App extends Component {
   state = {
@@ -18,7 +23,9 @@ export default class App extends Component {
   render(){
     if(this.state.fontLoaded){
          return (
-          <TemperatureMonitoring > </ TemperatureMonitoring>
+          <Provider store={store}>
+            <TemperatureMonitoring > </ TemperatureMonitoring>
+          </Provider>
         );
     }else{
       return null

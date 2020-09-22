@@ -1,12 +1,14 @@
 import { StyleSheet, Text, ScrollView, FlatList,View  } from 'react-native';
 import React, { Component } from 'react';
 import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-cards';
-import {ButtonGroup} from 'react-native-elements'
-
-export default class GroupButton extends Component{
+import { ButtonGroup } from 'react-native-elements'
+import {connect} from 'react-redux';
+import {change_select_painel}from './actions/groupButtonAction';
+import {bindActionCreators} from 'redux'
+class GroupButton extends Component{
     
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
         this.state ={
             selectedIndex: 1,
             buttons : ['Painel 1', 'Painel 2', 'Atualizar'],
@@ -16,6 +18,8 @@ export default class GroupButton extends Component{
 
     updateIndex(selectedIndex){
         this.setState({selectedIndex})
+        this.props.change_select_painel(this.state.selectedIndex)
+        console.log('updated',this.props)
     }
     
     showPainelName(){
@@ -27,8 +31,8 @@ export default class GroupButton extends Component{
     }
     
     render(){
-        const {selectedIndex} = this.setState
-
+        const selectedIndex = this.state.selectedIndex
+        console.log(selectedIndex)
         return(
             <View>
                 <Text style={styles.selectedButton}>
@@ -60,4 +64,16 @@ const styles = StyleSheet.create({
     }
 
 });
-  
+
+const mapStateToProps = (state) =>{
+    const selected = state    
+    console.log('selectaaaaaaaaaaaaaaaaaaaaaaaaa',selected)
+    return selected
+}
+
+const mapDispatchToProps = dispatch => (
+    bindActionCreators({
+      change_select_painel,
+    }, dispatch)
+  );
+export default connect(mapStateToProps, mapDispatchToProps)(GroupButton);
