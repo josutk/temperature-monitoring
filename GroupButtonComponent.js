@@ -67,7 +67,6 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) =>{
     const selected = state    
-    console.log('selectaaaaaaaaaaaaaaaaaaaaaaaaa',selected)
     return selected
 }
 

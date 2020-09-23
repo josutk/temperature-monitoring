@@ -1,4 +1,4 @@
-import { StyleSheet, Text, ScrollView, FlatList,View, SafeAreaView  } from 'react-native';
+import { StyleSheet, Text, ScrollView, FlatList,View, SafeAreaView, Dimensions  } from 'react-native';
 import React, { Component } from 'react';
 import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-cards';
 import {Header} from 'react-native-elements'
@@ -10,7 +10,7 @@ class TemperatureMonitoring extends Component{
     constructor(props){
         super(props)
         this.state ={
-            selectedIndex: 0,
+            selectedIndex: 2,
             buttons : ['Painel 1', 'Painel 2', 'Atualizar'],
         },
         this.updateIndex = this.updateIndex.bind(this)
@@ -33,29 +33,29 @@ class TemperatureMonitoring extends Component{
             return (
                 <FlatList 
                         data = {[
-                            {key: 'Tanque1 1'},
-                            {key: 'Tanque1 2'},
-                            {key: 'Tanque1 3'},
-                            {key: 'Tanque1 4'},
-                            {key: 'Tanque1 5'},
-                            {key: 'Tanque1 6'},
-                            {key: 'Tanque1 7'},
-                            {key: 'Tanque1 8'},
-                            {key: 'Tanque1 9'},
-                            {key: 'Tanque1 10'},
-                            {key: 'Tanque1 11'},
-                            {key: 'Tanque1 12'},
-                            {key: 'Tanque1 13'},
-                            {key: 'Tanque1 14'},
-                            {key: 'Tanque1 15'},
-                            {key: 'Tanque1 16'},
+                            {key: 'Painel 1 Tanque 1'},
+                            {key: 'Painel 1 Tanque 2'},
+                            {key: 'Painel 1 Tanque 3'},
+                            {key: 'Painel 1 Tanque 4'},
+                            {key: 'Painel 1 Tanque 5'},
+                            {key: 'Painel 1 Tanque 6'},
+                            {key: 'Painel 1 Tanque 7'},
+                            {key: 'Painel 1 Tanque 8'},
+                            {key: 'Painel 1 Tanque 9'},
+                            {key: 'Painel 1 Tanque 10'},
+                            {key: 'Painel 1 Tanque 11'},
+                            {key: 'Painel 1 Tanque 12'},
+                            {key: 'Painel 1 Tanque 13'},
+                            {key: 'Painel 1 Tanque 14'},
+                            {key: 'Painel 1 Tanque 15'},
+                            {key: 'Painel 1 Tanque 16'},
                         ]}
                         renderItem={({item}) => 
                             <Card style={styles.card}>
-                                <CardTitle
-                                    style={styles.cardText}  
-                                    title={item.key}
-                                />
+                                <Text style={styles.lineTop}>____________________</Text>
+                                <Text style={styles.cardTitle}>
+                                    {item.key}
+                                </Text>
                                 <CardContent > 
                                     <Text style={styles.cardText}> 
                                         27 °C
@@ -70,29 +70,29 @@ class TemperatureMonitoring extends Component{
                 return ( 
                 <FlatList 
                     data = {[
-                        {key: 'Tanque2 1'},
-                        {key: 'Tanque2 2'},
-                        {key: 'Tanque2 3'},
-                        {key: 'Tanque2 4'},
-                        {key: 'Tanque2 5'},
-                        {key: 'Tanque2 6'},
-                        {key: 'Tanque2 7'},
-                        {key: 'Tanque2 8'},
-                        {key: 'Tanque2 9'},
-                        {key: 'Tanque2 10'},
-                        {key: 'Tanque2 11'},
-                        {key: 'Tanque2 12'},
-                        {key: 'Tanque2 13'},
-                        {key: 'Tanque2 14'},
-                        {key: 'Tanque2 15'},
-                        {key: 'Tanque2 16'},
+                        {key: 'Painel 2 Tanque 1'},
+                        {key: 'Painel 2 Tanque 2'},
+                        {key: 'Painel 2 Tanque 3'},
+                        {key: 'Painel 2 Tanque 4'},
+                        {key: 'Painel 2 Tanque 5'},
+                        {key: 'Painel 2 Tanque 6'},
+                        {key: 'Painel 2 Tanque 7'},
+                        {key: 'Painel 2 Tanque 8'},
+                        {key: 'Painel 2 Tanque 9'},
+                        {key: 'Painel 2 Tanque 10'},
+                        {key: 'Painel 2 Tanque 11'},
+                        {key: 'Painel 2 Tanque 12'},
+                        {key: 'Painel 2 Tanque 13'},
+                        {key: 'Painel 2 Tanque 14'},
+                        {key: 'Painel 2 Tanque 15'},
+                        {key: 'Painel 2 Tanque 16'},
                     ]}
                     renderItem={({item}) => 
                         <Card style={styles.card}>
-                            <CardTitle
-                                style={styles.cardText}  
-                                title={item.key}
-                            />
+                                <Text style={styles.lineTop}>____________________</Text>
+                                <Text style={styles.cardTitle}>
+                                    {item.key}
+                                </Text>
                             <CardContent > 
                                 <Text style={styles.cardText}> 
                                     27 °C
@@ -101,6 +101,13 @@ class TemperatureMonitoring extends Component{
                         </Card>
                     }
                 />)
+            }if(painel == 2){
+                return (
+                    <View style={styles.position}>
+                    <View style={styles.colorBack}>
+                    </View>
+                    </View>
+                )
             }
         }
     render(){
@@ -129,21 +136,23 @@ class TemperatureMonitoring extends Component{
 const styles = StyleSheet.create({
     cardText: {
         fontSize:45,
-        color: 'green',
+        color: 'white',
         fontFamily: 'digital-7', 
-        textAlign:'center'
+        textAlign:'center',
+        paddingTop:10
     },
     card:{
-        backgroundColor: 'gainsboro',
+        backgroundColor: 'darkturquoise',
+        borderStyle:"dotted"
     },
     header:{
-       backgroundColor:'gainsboro',
+       backgroundColor:'darkturquoise',
         paddingRight:15,
         paddingLeft:15,
-        height: 170
+        height: 120
     },
     headerPos:{
-        paddingTop: 0,
+        paddingTop: 30,
         paddingRight:5,
         paddingLeft:5
     },
@@ -158,12 +167,29 @@ const styles = StyleSheet.create({
         textAlign:"center",
         fontSize: 23,
         color:'black',
-        backgroundColor:'grey'
+        backgroundColor:'cadetblue'
     },
-    selectedA:{
-        paddingTop:10
+    cardTitle:{
+        color:'white',
+        fontSize:23,
+        textAlign: "center",
+        paddingLeft:75,
+        paddingTop:5
+    },
+    lineTop:{
+        paddingLeft:110
+    },
+    colorBack:{
+        backgroundColor:'darkturquoise',
+        height: '100%',
+        width: '100%'
+    },
+    position:{
+        paddingTop:5,
+        paddingLeft:5,
+        paddingRight:5,
+        paddingBottom: 155
     }
-
 });
 const mapStateToProps = (state) =>{
     const { selected } = state    
