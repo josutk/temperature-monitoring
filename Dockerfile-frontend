@@ -1,0 +1,11 @@
+FROM node:10-alpine
+
+WORKDIR /app
+
+COPY /frontend/ /app/frontend/
+
+WORKDIR /app/frontend
+
+RUN npm install -g expo-cli --save
+
+RUN npm install -y
