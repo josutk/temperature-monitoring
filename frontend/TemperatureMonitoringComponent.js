@@ -10,7 +10,7 @@ class TemperatureMonitoring extends Component{
     constructor(props){
         super(props)
         this.state ={
-            selectedIndex: 2,
+            selectedIndex: 0,
             buttons : ['Painel 1', 'Painel 2', 'Atualizar'],
         },
         this.updateIndex = this.updateIndex.bind(this)
