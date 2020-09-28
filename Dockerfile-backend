@@ -4,8 +4,9 @@ ENV PYTHONUNBUFFERED 1
 
 WORKDIR /api
 
-COPY /backend /api/backend
-
 RUN pip3 install django
 
 RUN pip3 install djangorestframework
+
+COPY /backend /api/backend
+
