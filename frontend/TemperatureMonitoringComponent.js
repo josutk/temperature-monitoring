@@ -2,9 +2,9 @@ import { StyleSheet, Text, ScrollView, FlatList,View, SafeAreaView, Dimensions  
 import React, { Component } from 'react';
 import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-cards';
 import {Header} from 'react-native-elements'
-import GroupButton from './GroupButtonComponent'
 import {connect} from 'react-redux'
 import { ButtonGroup } from 'react-native-elements'
+import  axios  from 'axios'
 
 class TemperatureMonitoring extends Component{
     constructor(props){
@@ -12,6 +12,7 @@ class TemperatureMonitoring extends Component{
         this.state ={
             selectedIndex: 0,
             buttons : ['Painel 1', 'Painel 2', 'Atualizar'],
+            list : [0]
         },
         this.updateIndex = this.updateIndex.bind(this)
     }
@@ -27,9 +28,17 @@ class TemperatureMonitoring extends Component{
             return 'Atualizado'
         }
     }
+    getSensorsValues(){
+        axios.get('http://192.168.1.4:8000/api/values/').then(response => {
+          this.setState({list: response.data})
+          console.log(response.data)
+        }).catch(error => console.log(error));
+    }
+    
 
     showPainel(painel){
         if(painel == 0){
+            this.getSensorsValues()
             return (
                 <FlatList 
                         data = {[
@@ -58,7 +67,7 @@ class TemperatureMonitoring extends Component{
                                 </Text>
                                 <CardContent > 
                                     <Text style={styles.cardText}> 
-                                        27 °C
+                                        {this.state.list[0]} °c
                                     </Text>
                                 </CardContent>
                             </Card>
