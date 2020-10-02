@@ -1,9 +1,9 @@
-import { StyleSheet, Text, ScrollView, FlatList,View, SafeAreaView, Dimensions  } from 'react-native';
+import { StyleSheet, Text, ScrollView, FlatList,View, SafeAreaView  } from 'react-native';
 import React, { Component } from 'react';
-import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-cards';
+import { Card, CardContent, } from 'react-native-cards';
 import {Header} from 'react-native-elements'
 import {connect} from 'react-redux'
-import { ButtonGroup } from 'react-native-elements'
+import { ButtonGroup, Button } from 'react-native-elements'
 import  axios  from 'axios'
 
 class TemperatureMonitoring extends Component{
@@ -11,10 +11,12 @@ class TemperatureMonitoring extends Component{
         super(props)
         this.state ={
             selectedIndex: 0,
-            buttons : ['Painel 1', 'Painel 2', 'Atualizar'],
-            list : [0]
+            buttons : ['Painel 1', 'Cigano 2'],
+            list : [],
+            index: 0
         },
         this.updateIndex = this.updateIndex.bind(this)
+        this.getSensorsValues = this.getSensorsValues.bind(this)
     }
     
     updateIndex(selectedIndex){
@@ -28,17 +30,24 @@ class TemperatureMonitoring extends Component{
             return 'Atualizado'
         }
     }
+    
     getSensorsValues(){
-        axios.get('http://192.168.1.4:8000/api/values/').then(response => {
+       axios.get('http://192.168.1.5:8000/api/values/').then(response => {
           this.setState({list: response.data})
           console.log(response.data)
         }).catch(error => console.log(error));
+        console.log('click')
     }
     
+    resetIndex(){
+        if (this.state.index == 15){
+            this.state.index = 0
+        }
+    }
 
     showPainel(painel){
         if(painel == 0){
-            this.getSensorsValues()
+            //this.getSensorsValues()
             return (
                 <FlatList 
                         data = {[
@@ -59,15 +68,15 @@ class TemperatureMonitoring extends Component{
                             {key: 'Painel 1 Tanque 15'},
                             {key: 'Painel 1 Tanque 16'},
                         ]}
-                        renderItem={({item}) => 
+                        renderItem={({item, index}) => 
                             <Card style={styles.card}>
                                 <Text style={styles.lineTop}>____________________</Text>
                                 <Text style={styles.cardTitle}>
                                     {item.key}
                                 </Text>
-                                <CardContent > 
-                                    <Text style={styles.cardText}> 
-                                        {this.state.list[0]} °c
+                                <CardContent >
+                                    <Text style={styles.cardText}>
+                                        {this.state.list[index]} ° C
                                     </Text>
                                 </CardContent>
                             </Card>
@@ -79,24 +88,24 @@ class TemperatureMonitoring extends Component{
                 return ( 
                 <FlatList 
                     data = {[
-                        {key: 'Painel 2 Tanque 1'},
-                        {key: 'Painel 2 Tanque 2'},
-                        {key: 'Painel 2 Tanque 3'},
-                        {key: 'Painel 2 Tanque 4'},
-                        {key: 'Painel 2 Tanque 5'},
-                        {key: 'Painel 2 Tanque 6'},
-                        {key: 'Painel 2 Tanque 7'},
-                        {key: 'Painel 2 Tanque 8'},
-                        {key: 'Painel 2 Tanque 9'},
-                        {key: 'Painel 2 Tanque 10'},
-                        {key: 'Painel 2 Tanque 11'},
-                        {key: 'Painel 2 Tanque 12'},
-                        {key: 'Painel 2 Tanque 13'},
-                        {key: 'Painel 2 Tanque 14'},
-                        {key: 'Painel 2 Tanque 15'},
-                        {key: 'Painel 2 Tanque 16'},
+                        {key: 'Cigano 2 Tanque 1'},
+                        {key: 'Cigano 2 Tanque 2'},
+                        {key: 'Cigano 2 Tanque 3'},
+                        {key: 'Cigano 2 Tanque 4'},
+                        {key: 'Cigano 2 Tanque 5'},
+                        {key: 'Cigano 2 Tanque 6'},
+                        {key: 'Cigano 2 Tanque 7'},
+                        {key: 'Cigano 2 Tanque 8'},
+                        {key: 'Cigano 2 Tanque 9'},
+                        {key: 'Cigano 2 Tanque 10'},
+                        {key: 'Cigano 2 Tanque 11'},
+                        {key: 'Cigano 2 Tanque 12'},
+                        {key: 'Cigano 2 Tanque 13'},
+                        {key: 'Cigano 2 Tanque 14'},
+                        {key: 'Cigano 2 Tanque 15'},
+                        {key: 'Cigano 2 Tanque 16'},
                     ]}
-                    renderItem={({item}) => 
+                    renderItem={({item, index}) => 
                         <Card style={styles.card}>
                                 <Text style={styles.lineTop}>____________________</Text>
                                 <Text style={styles.cardTitle}>
@@ -104,7 +113,7 @@ class TemperatureMonitoring extends Component{
                                 </Text>
                             <CardContent > 
                                 <Text style={styles.cardText}> 
-                                    27 °C
+                                {this.state.list[index]} °C
                                 </Text>
                             </CardContent>
                         </Card>
@@ -123,7 +132,6 @@ class TemperatureMonitoring extends Component{
         
         const selectedIndex = this.state.selectedIndex
         return (
-
             <SafeAreaView style={{flex: 1}}>
                 <View style={styles.headerPos}>
                     <Header
@@ -134,9 +142,16 @@ class TemperatureMonitoring extends Component{
                             selectedIndex={selectedIndex}
                             buttons={this.state.buttons}
                             containerStyle={styles.buttonGroup}
-                        />}
-                    />
+                        />
+                        }
+                   />
                 </View>
+                <View style={styles.updateButtonView}>
+                    <Button onPress={this.getSensorsValues} 
+                            title='Atualizar'
+                            buttonStyle={styles.updateButton}>
+                    </Button>
+                </ View>
             {this.showPainel(this.state.selectedIndex)}
             </ SafeAreaView>
         )
@@ -198,6 +213,19 @@ const styles = StyleSheet.create({
         paddingLeft:5,
         paddingRight:5,
         paddingBottom: 155
+    },
+    updateButton:{
+        paddingBottom: 10,
+        backgroundColor:'cadetblue',
+        paddingLeft : 10,
+        paddingRight: 10,
+        height: 40,
+        width: 250,
+    },
+    updateButtonView:{
+        paddingLeft : 55,
+        paddingTop: 3,
+        paddingBottom: 5
     }
 });
 const mapStateToProps = (state) =>{
